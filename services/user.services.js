@@ -72,7 +72,7 @@ class UsersService {
       try {
         const dataTodos = fs.readFileSync("todos.json", "utf8");
         const todos = JSON.parse(dataTodos);
-        users.push(...todos);
+        // users.push(...todos);
 
         const { title, isCompleted,userId } = info;
 
@@ -81,7 +81,7 @@ class UsersService {
           id: uuidv4(),
           title,
           isCompleted,
-          userId,
+          userId
         };
 
         todos.push(newTask);

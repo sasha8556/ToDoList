@@ -29,7 +29,7 @@ class UsersController {
       if (!title || !isCompleted) {
         return res.status(400).json({ message: 'Недостаточно данных для создания таска' });
       }
-      const userId = req.user;
+      const userId = req.user
       console.log(userId);
 
       const newTodo = await UsersService.createTodo({
