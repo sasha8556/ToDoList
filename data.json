@@ -1,7 +1,12 @@
 [
   {
-    "id": "c0870e05-0d0d-430c-b3a0-1d34c7fba0df",
-    "login": "qwe",
-    "password": "$2b$10$Ih4j4qZoG.OWywSkghXPtOA5BuKW5otCEo5mokYkcIHs.Gbim.dAC"
+    "id": "d500ac8e-9a7a-4b76-828b-e624421e17e3",
+    "login": "Sasha@gmail.com",
+    "password": "$2b$10$F.dMKMO1rXaGch25Pcw4du5lqOmGyTuCS8xcagSh4y4VTyWBJWwUm"
+  },
+  {
+    "id": "8946d254-606f-4157-a7a6-93f8af4f8e17",
+    "login": "Lada@gmail.com",
+    "password": "$2b$10$DaJUrxdqAMAhfRHmEQ15i.NwUT.nWt2R8839M5hJlhDI8lc8O6KRa"
   }
 ]
