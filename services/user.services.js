@@ -44,13 +44,13 @@ class UsersService {
         const { login, password } = info;
         const user = users.find((user) => user.login === login);
         if (!user) {
-          reject("Неверный email или пароль");
+          reject("Неверный login или пароль");
           return;
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-          reject("Неверный email или пароль");
+          reject("Неверный login или пароль");
         }
         console.log(process.env.ACCESS_TOKEN_SECRET);
         const token = jwt.sign(

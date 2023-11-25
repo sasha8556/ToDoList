@@ -1,6 +1,7 @@
 const UsersService = require("../services/user.services");
 
 class UsersController {
+
   async registerUser(req, res) {
     try {
       let newUser = await UsersService.registerUser(req.body);

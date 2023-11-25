@@ -8,5 +8,10 @@
     "id": "8946d254-606f-4157-a7a6-93f8af4f8e17",
     "login": "Lada@gmail.com",
     "password": "$2b$10$DaJUrxdqAMAhfRHmEQ15i.NwUT.nWt2R8839M5hJlhDI8lc8O6KRa"
+  },
+  {
+    "id": "608df179-c8ff-4c62-b587-1565df9d82a5",
+    "login": "user@example.com",
+    "password": "$2b$10$CCByHz9qF.7BWh7aFveH.u9oD8/z1v5scqpSw0U08wewWvkkGeyZ."
   }
 ]
