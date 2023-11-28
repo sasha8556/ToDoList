@@ -13,5 +13,10 @@
     "id": "608df179-c8ff-4c62-b587-1565df9d82a5",
     "login": "user@example.com",
     "password": "$2b$10$CCByHz9qF.7BWh7aFveH.u9oD8/z1v5scqpSw0U08wewWvkkGeyZ."
+  },
+  {
+    "id": "5649489b-89d2-49c0-9f4d-a0bb74f24ce6",
+    "login": "decem@gmail.com",
+    "password": "$2b$10$wqv1oqkC162Biaro4rKX3.7cn36nXqWZhkTJrl4gBBjXg5FDv6/Lq"
   }
 ]

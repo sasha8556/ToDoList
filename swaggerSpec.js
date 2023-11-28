@@ -9,15 +9,15 @@ const options = {
       description: "API documentation for your application",
     },
     components: {
-        securitySchemes: {
-          bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-            name: 'Authorization'
-          }
-        }
-      }
+      securitySchemes: {
+        CustomToken: {
+          type: "apiKey",
+          in: "header",
+          name: "Authorization",
+          description: 'Вставьте ваш JWT токен без префикса "Bearer"',
+        },
+      },
+    },
   },
   apis: ["./routes/*.js"],
 };

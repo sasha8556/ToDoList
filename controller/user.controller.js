@@ -1,11 +1,16 @@
 const UsersService = require("../services/user.services");
+const { validationResult } = require("express-validator");
 
 class UsersController {
-
   async registerUser(req, res) {
     try {
       let newUser = await UsersService.registerUser(req.body);
-      res.status(201).json(newUser);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      } else {
+        res.status(201).json(newUser);
+      }
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Ошибка регистрации пользователя" });
@@ -14,7 +19,12 @@ class UsersController {
   async loginUser(req, res) {
     try {
       let foundUser = await UsersService.loginUser(req.body);
-      res.status(200).json(foundUser);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      } else {
+        res.status(200).json(foundUser);
+      }
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Неправильный логин или пароль " });
@@ -39,7 +49,12 @@ class UsersController {
         userId,
       });
 
-      return res.status(201).json(newTodo);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      } else {
+        return res.status(201).json(newTodo);
+      }
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Ошибка создания таска" });
@@ -50,7 +65,12 @@ class UsersController {
     try {
       const { userId } = req.user;
       const userTodos = await UsersService.getTasks(userId);
-      res.send(userTodos);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+      } else {
+        res.send(userTodos);
+      }
     } catch (error) {
       console.log("Error: ", error);
       return res.status(500).json({ message: "Ошибка получения такса" });
@@ -67,7 +87,13 @@ class UsersController {
       console.log("---title:", title);
 
       const updatedTodos = await UsersService.updateTitle(id, title, taskId);
-      res.send(updatedTodos);
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+      } else {
+        res.send(updatedTodos);
+      }
     } catch (error) {
       console.log("Error: ", error);
       return res.status(500).json({ message: "Ошибка изменения title" });
@@ -83,13 +109,17 @@ class UsersController {
       console.log("---taskId:", taskId);
 
       const updatedTodos = await UsersService.updateIsCompleted(id, taskId);
-      res.send(updatedTodos);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+      } else {
+        res.send(updatedTodos);
+      }
     } catch (error) {
       console.log("Error: ", error);
       return res.status(500).json({ message: "Ошибка изменения IsCompleted" });
     }
   }
-
 
   async deleteTodoById(req, res) {
     try {
@@ -100,7 +130,12 @@ class UsersController {
       console.log("---taskId:", taskId);
 
       const updatedTodos = await UsersService.deleteTodoById(id, taskId);
-      res.send(updatedTodos);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+      } else {
+        res.send(updatedTodos);
+      }
     } catch (error) {
       console.log("Error: ", error);
       return res.status(500).json({ message: "Ошибка удаления такса" });

@@ -111,7 +111,7 @@ class UsersService {
     });
   }
 
-  updateTitle(taskId, id, title) {
+  updateTitle(id, title, taskId) {
     return new Promise((resolve, reject) => {
       try {
         const data = fs.readFileSync("todos.json", "utf8");
@@ -134,10 +134,8 @@ class UsersService {
         reject("Ошибка обновления свойства title");
       }
     });
-
-
   }
-  updateIsCompleted(id,taskId) {
+  updateIsCompleted(id, taskId) {
     return new Promise((resolve, reject) => {
       try {
         const data = fs.readFileSync("todos.json", "utf8");
@@ -162,8 +160,7 @@ class UsersService {
     });
   }
 
-
-  deleteTodoById(id,taskId) {
+  deleteTodoById(id, taskId) {
     return new Promise((resolve, reject) => {
       try {
         const data = fs.readFileSync("todos.json", "utf8");
@@ -172,8 +169,8 @@ class UsersService {
         const taskIndex = allTodos.findIndex(
           (todo) => todo.id === taskId && todo.userId === id
         );
-        console.log("Index:",taskIndex);
-        if (taskIndex===-1) {
+        console.log("Index:", taskIndex);
+        if (taskIndex === -1) {
           reject("Такого id не существует");
           return;
         }
