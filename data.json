@@ -10,13 +10,8 @@
     "password": "$2b$10$DaJUrxdqAMAhfRHmEQ15i.NwUT.nWt2R8839M5hJlhDI8lc8O6KRa"
   },
   {
-    "id": "608df179-c8ff-4c62-b587-1565df9d82a5",
-    "login": "user@example.com",
-    "password": "$2b$10$CCByHz9qF.7BWh7aFveH.u9oD8/z1v5scqpSw0U08wewWvkkGeyZ."
-  },
-  {
-    "id": "5649489b-89d2-49c0-9f4d-a0bb74f24ce6",
-    "login": "decem@gmail.com",
-    "password": "$2b$10$wqv1oqkC162Biaro4rKX3.7cn36nXqWZhkTJrl4gBBjXg5FDv6/Lq"
+    "id": "e4b7aca4-dbb0-4854-b1d8-57f2b6500fb5",
+    "login": "myname@mail.ru",
+    "password": "$2b$10$5Rup1jrshg1jFwSJ6/x10.KqHz3lvBFxzoo1a2S.LXsaO4BuFFNDa"
   }
 ]

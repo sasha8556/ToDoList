@@ -135,7 +135,7 @@ class UsersService {
       }
     });
   }
-  updateIsCompleted(id, taskId) {
+  updateIsCompleted(id,isCompleted, taskId) {
     return new Promise((resolve, reject) => {
       try {
         const data = fs.readFileSync("todos.json", "utf8");
@@ -149,7 +149,7 @@ class UsersService {
           reject("Такого id не существует");
           return;
         }
-        foundTodo.isCompleted = !foundTodo.isCompleted;
+        foundTodo.isCompleted = isCompleted;
 
         fs.writeFileSync("todos.json", JSON.stringify(allTodos, null, 2));
         resolve(allTodos);
@@ -187,3 +187,4 @@ class UsersService {
 }
 
 module.exports = new UsersService();
+

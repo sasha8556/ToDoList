@@ -10,14 +10,14 @@ const options = {
     },
     components: {
       securitySchemes: {
-        CustomToken: {
-          type: "apiKey",
-          in: "header",
-          name: "Authorization",
-          description: 'Вставьте ваш JWT токен без префикса "Bearer"',
-        },
-      },
-    },
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          name: 'Authorization'
+        }
+      }
+    }
   },
   apis: ["./routes/*.js"],
 };

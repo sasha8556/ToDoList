@@ -1,5 +1,6 @@
 const UsersService = require("../services/user.services");
 const { validationResult } = require("express-validator");
+const Sentry = require("@sentry/node");
 
 class UsersController {
   async registerUser(req, res) {
@@ -13,7 +14,7 @@ class UsersController {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Ошибка регистрации пользователя" });
+      Sentry.captureException(error);
     }
   }
   async loginUser(req, res) {
@@ -27,7 +28,7 @@ class UsersController {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Неправильный логин или пароль " });
+      Sentry.captureException(error);
     }
   }
 
@@ -57,7 +58,7 @@ class UsersController {
       }
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Ошибка создания таска" });
+      Sentry.captureException(error);
     }
   }
 
@@ -73,7 +74,7 @@ class UsersController {
       }
     } catch (error) {
       console.log("Error: ", error);
-      return res.status(500).json({ message: "Ошибка получения такса" });
+      Sentry.captureException(error);
     }
   }
 
@@ -96,19 +97,20 @@ class UsersController {
       }
     } catch (error) {
       console.log("Error: ", error);
-      return res.status(500).json({ message: "Ошибка изменения title" });
+      Sentry.captureException(error);
     }
   }
 
   async updateIsCompleted(req, res) {
     try {
       const { id } = req.params;
-      const { taskId } = req.body;
+      const { isCompleted, taskId } = req.body;
 
       console.log("---id:", id);
       console.log("---taskId:", taskId);
+      console.log("---isCompleted:", isCompleted);
 
-      const updatedTodos = await UsersService.updateIsCompleted(id, taskId);
+      const updatedTodos = await UsersService.updateIsCompleted(id,isCompleted, taskId);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
@@ -117,7 +119,7 @@ class UsersController {
       }
     } catch (error) {
       console.log("Error: ", error);
-      return res.status(500).json({ message: "Ошибка изменения IsCompleted" });
+      Sentry.captureException(error);
     }
   }
 
@@ -138,7 +140,7 @@ class UsersController {
       }
     } catch (error) {
       console.log("Error: ", error);
-      return res.status(500).json({ message: "Ошибка удаления такса" });
+      Sentry.captureException(error);
     }
   }
 }

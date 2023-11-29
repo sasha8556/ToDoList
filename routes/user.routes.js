@@ -15,22 +15,29 @@ const validateDataBodyUser = [
     .withMessage("Пароль не может быть таким же, как login"),
 ];
 
-const validateDataBodyTodos = [
+const validateDataBodyTodosTitle = [
   body("title")
     .isString()
     .isLength({ min: 2 })
     .withMessage("Title должен содержать минимум 5 символов"),
+];
+
+const validateDataBodyTodosIsCompleted = [
   body("isCompleted")
     .isBoolean()
     .withMessage("isCompleted должен быть boolean"),
 ];
 
 const validateDataUserId = [
-  param("userId").isString().withMessage("userId должен быть в формате строки"),
+  param("id").isString().withMessage("userId должен быть в формате строки"),
 ];
 
+
 const validateData = [
-  header("Authorization").isJWT().withMessage("Invalid JWT token"),
+  header("Authorization")
+    .customSanitizer(value=> value.split(' ')[1])
+    .isJWT()
+    .withMessage("Invalid JWT token"),
 ];
 
 /**
@@ -96,7 +103,7 @@ router.post("/register", validateDataBodyUser, UsersController.registerUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User' # ссылка на схему пользователя
+ *               $ref: '#/components/schemas/User' 
  *       '500':
  *         description: Неправильный логин или пароль
  */
@@ -112,7 +119,7 @@ router.post("/login", validateDataBodyUser, UsersController.loginUser);
  *      tags:
  *        - Todos
  *      security:
- *         - jwtToken: []
+ *         - bearerAuth: []
  *      requestBody:
  *        $ref: "#/components/requestBodies/Todos"
  *      responses:
@@ -141,7 +148,8 @@ router.post("/login", validateDataBodyUser, UsersController.loginUser);
 router.post(
   "/todos",
   authenticateToken,
-  validateDataBodyTodos,
+  validateDataBodyTodosIsCompleted,
+  validateDataBodyTodosTitle,
   validateData,
   UsersController.createTodo
 );
@@ -178,8 +186,8 @@ router.get("/todos", authenticateToken, validateData, UsersController.getTasks);
  * @swagger
  * /api/users/todos/{id}:
  *   patch:
- *     summary: Частичное обновление таски
- *     description: Обновляет часть данных таски по его ID.
+ *     summary: Частичное обновление таски.
+ *     description: Обновляет часть данных таски по его ID.Изменение свойства title.
  *     tags:
  *       - Todos
  *     security:
@@ -190,7 +198,7 @@ router.get("/todos", authenticateToken, validateData, UsersController.getTasks);
  *         required: true
  *         schema:
  *           type: string
- *         description: Идентификатор таски.
+ *         description: ID пользователя.
  *     requestBody:
  *       content:
  *         application/json:
@@ -209,7 +217,7 @@ router.get("/todos", authenticateToken, validateData, UsersController.getTasks);
 router.patch(
   "/todos/:id",
   authenticateToken,
-  validateDataBodyTodos,
+  validateDataBodyTodosTitle,
   validateDataUserId,
   validateData,
   UsersController.updateTitle
@@ -238,6 +246,8 @@ router.patch(
  *           schema:
  *             type: object
  *             properties:
+ *               isCompleted:
+ *                 type: boolean
  *               taskId:
  *                 type: string
  *     responses:
@@ -249,7 +259,7 @@ router.patch(
   "/todos/:id/isCompleted",
   authenticateToken,
   validateData,
-  validateDataBodyTodos,
+  validateDataBodyTodosIsCompleted,
   validateDataUserId,
   UsersController.updateIsCompleted
 );
