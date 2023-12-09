@@ -6,10 +6,8 @@ const authenticateToken = (req, res, next) => {
       const token = authHeader && authHeader.split(" ")[1];
       if (token == null) res.status(401).send('Unauthorized');
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        console.error(err);
         if (err) next(new Error("invalid token"));
         req.user = user;
-        console.log("----user:",user);
         next();
       });
     } catch (error) {

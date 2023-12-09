@@ -1,17 +1,12 @@
 [
-  {
-    "id": "d500ac8e-9a7a-4b76-828b-e624421e17e3",
-    "login": "Sasha@gmail.com",
-    "password": "$2b$10$F.dMKMO1rXaGch25Pcw4du5lqOmGyTuCS8xcagSh4y4VTyWBJWwUm"
-  },
-  {
-    "id": "8946d254-606f-4157-a7a6-93f8af4f8e17",
-    "login": "Lada@gmail.com",
-    "password": "$2b$10$DaJUrxdqAMAhfRHmEQ15i.NwUT.nWt2R8839M5hJlhDI8lc8O6KRa"
-  },
-  {
-    "id": "e4b7aca4-dbb0-4854-b1d8-57f2b6500fb5",
-    "login": "myname@mail.ru",
-    "password": "$2b$10$5Rup1jrshg1jFwSJ6/x10.KqHz3lvBFxzoo1a2S.LXsaO4BuFFNDa"
-  }
+   {
+      "id": "9d8a6c30-57e9-4bab-bbc4-346ca16eaad6",
+      "login": "mymail@mail.ru",
+      "password": "$2b$10$MJXtgK.JO9scMtqeSBMrKekaLLH1vTq/sLxaGygWxKsfBwyLUXYuS"
+   },
+   {
+      "id": "9463174b-5f36-43d1-b90a-0de3cf908ba2",
+      "login": "belonoz@gmail.com",
+      "password": "$2b$10$5ee6UnKc01pQnQuLoHFBPejtp5WFkUZcPsG6H1Dhk6G1AN5IVNKG."
+   }
 ]

@@ -1,32 +1,8 @@
 [
   {
-    "id": "9a38f2a9-9bbd-42d2-a525-ebd784a021c4",
-    "title": "Task #1",
-    "isCompleted": true,
-    "userId": "d500ac8e-9a7a-4b76-828b-e624421e17e3"
-  },
-  {
-    "id": "68dc5d8b-0663-4fa5-9482-b8976ba13be9",
-    "title": "Task #3",
+    "id": "25943c4e-4a3a-4c37-940b-339187968377",
+    "title": "Добить таску ёпт",
     "isCompleted": false,
-    "userId": "8946d254-606f-4157-a7a6-93f8af4f8e17"
-  },
-  {
-    "id": "6846a0f5-0386-459a-b52e-d0b01cdcab38",
-    "title": "Task #4",
-    "isCompleted": false,
-    "userId": "8946d254-606f-4157-a7a6-93f8af4f8e17"
-  },
-  {
-    "id": "698a3917-f0ec-4cb2-a272-cf7c083356f2",
-    "title": "Дописать ToDoList",
-    "isCompleted": true,
-    "userId": "e4b7aca4-dbb0-4854-b1d8-57f2b6500fb5"
-  },
-  {
-    "id": "b332e1d2-dfff-4506-8b62-a2a59440ab97",
-    "title": "Проверка Sentry",
-    "isCompleted": true,
-    "userId": "e4b7aca4-dbb0-4854-b1d8-57f2b6500fb5"
+    "userId": "9d8a6c30-57e9-4bab-bbc4-346ca16eaad6"
   }
 ]
