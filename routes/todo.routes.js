@@ -15,7 +15,6 @@ const validationToken = [
     .withMessage("Invalid JWT token"),
 ];
 
-
 /**
  * @swagger
  * /api/todos/:
@@ -53,6 +52,7 @@ const validationToken = [
 router.post(
   "/",
   authenticateToken,
+  validationToken,
   validateDataBodyTodosTitle,
   TodoController.createTodo
 );
@@ -124,6 +124,7 @@ router.get("/", authenticateToken, validationToken, TodoController.getTasks);
 router.patch(
   "/:id",
   authenticateToken,
+  validationToken,
   validateDataBodyTodosTitle,
   TodoController.updateTitle
 );
@@ -190,8 +191,8 @@ router.patch(
 router.delete(
   "/:id",
   authenticateToken,
+  validationToken,
   TodoController.deleteTodoById
 );
-
 
 module.exports = router;

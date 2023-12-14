@@ -53,14 +53,14 @@ class UsersController {
         const { login, password } = req.body;
         const allUsers = await UsersService.getUser();
         const user = allUsers.find((item) => item.login === login);
+
         if (!user) {
-          reject("Неверный login");
-          return;
+          return res.status(400).json({ error: "Неверный login" });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-          reject("Неверный пароль");
+          return res.status(400).json({ error: "Неверный пароль" });
         }
         const token = jwt.sign(
           { userId: user.id },
@@ -69,6 +69,7 @@ class UsersController {
             expiresIn: "1h",
           }
         );
+
         res.status(200).send({ token: token });
       }
     } catch (error) {

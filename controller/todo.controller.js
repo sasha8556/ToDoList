@@ -11,6 +11,7 @@ class TodoController {
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
+
       const { title } = req.body;
 
       if (!title) {
@@ -28,7 +29,7 @@ class TodoController {
       };
 
       await TodoService.createTodo({ id: uuidv4(), ...newTask });
-      return res.send(newTask).status(200);
+      return res.send(newTask).status(201);
     } catch (error) {
       console.error(error);
       Sentry.captureException(error);
@@ -96,7 +97,7 @@ class TodoController {
       if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
       } else {
-        res.send(updatedTodos);
+        res.send(updatedTodos).status(200);
       }
     } catch (error) {
       console.log("Error: ", error);
