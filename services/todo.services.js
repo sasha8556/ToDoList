@@ -1,138 +1,53 @@
-const fs = require("fs");
-
+const { getConnection, useDefaultDb } = require("../helpers/mongoHelper");
 
 class TodoService {
-  createTodo(newTodo) {
-    return new Promise(async (resolve, reject) => {
-      fs.readFile("todos.json", "utf8", (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          const result = JSON.parse(data);
-          result.push(newTodo);
-          fs.writeFile("todos.json", JSON.stringify(result, null, 3), (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          });
-        }
-      });
-    });
+  #COLLECTION = "tasks";
+
+  async createTodo(newTodo) {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    await db.collection(this.#COLLECTION).insertOne(newTodo);
+    connection.close();
   }
 
-  getTasks(userId) {
-    return new Promise((resolve, reject) => {
-      try {
-        fs.readFile("todos.json", "utf8", (err, data) => {
-          if (err) {
-            console.error(err);
-            reject(err);
-          }
-          const allTodos = JSON.parse(data);
-          const userTodos = allTodos.filter((todo) => todo.userId === userId);
-          resolve(userTodos);
-        });
-      } catch (error) {
-        console.error(error);
-        reject("Ошибка при получении задач");
-      }
-    });
+  async getTasks(userId) {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const [data] = await db
+      .collection(this.#COLLECTION)
+      .aggregate([{ $match: { userId } }])
+      .toArray();
+    connection.close();
+    return data;
   }
 
-  updateTitle(id, title) {
-    return new Promise((resolve, reject) => {
-      fs.readFile("todos.json", "utf8", (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          const obj = JSON.parse(data);
-          const index = obj.findIndex((item) => item.id === id);
-          if (index === -1) {
-            reject("Индекс не найден");
-          } else {
-            const updatedPets = { ...obj[index], title };
-            obj[index] = updatedPets;
-            console.log(updatedPets);
-
-            fs.writeFile(
-              "todos.json",
-              JSON.stringify(obj, null, 3),
-              "utf8",
-              (error) => {
-                if (error) {
-                  reject(error);
-                } else {
-                  resolve(updatedPets);
-                }
-              }
-            );
-          }
-        }
-      });
-    });
+  async updateTitle(id, title) {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const updateResult = await db
+      .collection(this.#COLLECTION)
+      .updateOne({ id: id }, { $set: { title: title } });
+    connection.close();
+    return updateResult;
   }
-  updateIsCompleted(id) {
-    return new Promise((resolve, reject) => {
-      fs.readFile("todos.json", "utf8", (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          const allTodos = JSON.parse(data);
-          const foundIndex = allTodos.findIndex((todo) => todo.id === id);
-          if (foundIndex === -1) {
-            reject("Такого id не существует");
-          } else {
-            const updateTodo = { ...allTodos[foundIndex] };
-            updateTodo.isCompleted = !updateTodo.isCompleted;
-            allTodos[foundIndex] = updateTodo;
-            fs.writeFile(
-              "todos.json",
-              JSON.stringify(allTodos, null, 3),
-              "utf8",
-              (err) => {
-                if (err) {
-                  reject(err);
-                } else {
-                  resolve(updateTodo);
-                }
-              }
-            );
-          }
-        }
-      });
-    });
+  async updateIsCompleted(id) {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const updateResult = await db
+      .collection(this.#COLLECTION)
+      .updateOne({ id: id }, { $set: { isCompleted: true } });
+    connection.close();
+    return updateResult;
   }
 
-  deleteTodoById(id) {
-    return new Promise((resolve, reject) => {
-      fs.readFile("todos.json", "utf8", (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          const allTodos = JSON.parse(data);
-          const taskIndex = allTodos.findIndex((todo) => todo.id === id);
-          if (taskIndex === -1) {
-            reject("Такого id не существует");
-            return;
-          }
-          allTodos.splice(taskIndex, 1);
-          fs.writeFile(
-            "todos.json",
-            JSON.stringify(allTodos, null, 2),
-            "utf8",
-            (err) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve("Таска удалена");
-              }
-            }
-          );
-        }
-      });
-    });
+  async deleteTodoById(id) {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const deleteResult = await db
+      .collection(this.#COLLECTION)
+      .deleteMany({ id: id });
+    connection.close();
+    return deleteResult;
   }
 }
 

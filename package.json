@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "testusers" : "mocha ./test/userTest.js",
-    "testtodos" : "mocha ./test/todoTest .js"
+    "testusers": "mocha ./test/userTest.js",
+    "testtodos": "mocha ./test/todoTest .js"
   },
   "author": "Aleksandra Belonozhko",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "express-validator": "^7.0.1",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.1"

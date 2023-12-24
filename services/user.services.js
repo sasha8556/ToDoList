@@ -1,39 +1,25 @@
-const fs = require("fs");
+// const fs = require("fs");
+const { getConnection, useDefaultDb } = require('../helpers/mongoHelper')
 
 class UsersService {
-  getUser() {
-    return new Promise((res, rej) => {
-      fs.readFile("data.json", "utf8", (error, data) => {
-        if (error) {
-          rej(error);
-        } else {
-          const result = JSON.parse(data);
-          res(result);
-        }
-      });
-    });
+  #COLLECTION = "users";
+
+  async getUser() {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const data = await db
+    .collection(this.#COLLECTION)
+    .aggregate()
+    .toArray();
+    connection.close();
+    return data;
   }
-  registerUser(newUser) {
-    return new Promise((resolve, reject) => {
-      fs.readFile("data.json", "utf8", (err, data) => {
-        if (err) {
-          console.error(err);
-          reject(err);
-        }
 
-        const result = JSON.parse(data);
-        result.push(newUser);
-
-        fs.writeFile("data.json", JSON.stringify(result, null, 3), (err) => {
-          if (err) {
-            console.error(err);
-            reject(err);
-            return;
-          }
-          resolve("Файл успешно записан.");
-        });
-      });
-    });
+  async registerUser(newUser) {
+    const connection = await getConnection()
+    const db = useDefaultDb(connection)
+    await db.collection(this.#COLLECTION).insertOne(newUser)
+    connection.close()
   }
 }
 

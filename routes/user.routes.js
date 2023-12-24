@@ -85,6 +85,9 @@ router.post("/register", validateDataBodyUser, UsersController.registerUser);
 
 router.post("/login", validateDataBodyUser, UsersController.loginUser);
 
+router.get('/', UsersController.getUser)
+
+
 
 
 module.exports = router;
