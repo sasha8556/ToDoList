@@ -11,6 +11,9 @@ const swaggerSpec = require("./swaggerSpec.js");
 
 const app = express();
 
+const mongoose = require("mongoose");
+const { connectDb } = require("./config/db");
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(Sentry.Handlers.requestHandler());
@@ -22,6 +25,10 @@ app.use("/api", routes);
 
 const port = process.env.PORT;
 
-app.listen(port, () => console.log("Served started "));
+connectDb();
+mongoose.connection.once("open", () => {
+  console.log("Connected to the database");
+  app.listen(port, () => console.log("Served started "));
+});
 
 module.exports = app;

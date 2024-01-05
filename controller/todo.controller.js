@@ -36,6 +36,15 @@ class TodoController {
     }
   }
 
+  async findTodoById(id) {
+    try {
+        const todo = await TodoService.getTodoById(id);
+        return !!todo;
+    } catch(err) {
+        Sentry.captureException(err);
+    }
+}
+
   async getTasks(req, res) {
     try {
       const errors = validationResult(req);

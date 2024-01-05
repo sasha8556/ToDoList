@@ -1,53 +1,29 @@
-const { getConnection, useDefaultDb } = require("../helpers/mongoHelper");
+const Todo = require("../models/todo.model");
 
 class TodoService {
-  #COLLECTION = "tasks";
-
   async createTodo(newTodo) {
-    const connection = await getConnection();
-    const db = useDefaultDb(connection);
-    await db.collection(this.#COLLECTION).insertOne(newTodo);
-    connection.close();
+    return await Todo.create(newTodo);
+  }
+  async getTodoById(id) {
+    return await Todo.findById(id);
   }
 
-  async getTasks(userId) {
-    const connection = await getConnection();
-    const db = useDefaultDb(connection);
-    const [data] = await db
-      .collection(this.#COLLECTION)
-      .aggregate([{ $match: { userId } }])
-      .toArray();
-    connection.close();
-    return data;
+  async getTasks() {
+    return await Todo.find();
   }
 
   async updateTitle(id, title) {
-    const connection = await getConnection();
-    const db = useDefaultDb(connection);
-    const updateResult = await db
-      .collection(this.#COLLECTION)
-      .updateOne({ id: id }, { $set: { title: title } });
-    connection.close();
-    return updateResult;
+    await Todo.updateOne({ _id: id }, { title: title });
+    return this.getTodoById(id);
   }
   async updateIsCompleted(id) {
-    const connection = await getConnection();
-    const db = useDefaultDb(connection);
-    const updateResult = await db
-      .collection(this.#COLLECTION)
-      .updateOne({ id: id }, { $set: { isCompleted: true } });
-    connection.close();
-    return updateResult;
+    const todo = await this.getTodoById(id);
+    await Todo.updateOne({ _id: id }, { isCompleted: !todo.isCompleted });
+    return await this.getTodoById(id);
   }
 
   async deleteTodoById(id) {
-    const connection = await getConnection();
-    const db = useDefaultDb(connection);
-    const deleteResult = await db
-      .collection(this.#COLLECTION)
-      .deleteMany({ id: id });
-    connection.close();
-    return deleteResult;
+    return await Todo.deleteOne({ _id: id })
   }
 }
 
